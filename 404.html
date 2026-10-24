@@ -125,9 +125,12 @@ body{
 
 <script>
 /* GitHub Pages 会把本站部署在 /<仓库名>/ 这样的子路径下，
-   404 页被服务时 URL 深度不确定，所以这里探测一次真正的站点根目录，
-   再把页内链接改成从根目录出发的路径。探测失败时保留相对链接，页面照常可用。 */
+   404 页被服务时 URL 深度不确定（可能是 /repo/stm32/xxx），
+   所以这里从深到浅探测一次真正的站点根目录，再把页内链接改成从根目录出发的路径。
+   探测标记用 assets/favicon.svg —— 它只存在于站点根，不会像 index.html
+   那样在 stm32/、esp32/ 子目录里也存在而误判。探测失败时保留相对链接，页面照常可用。 */
 (function () {
+  var MARKER = 'assets/favicon.svg';
   var segs = location.pathname.split('/').filter(Boolean);
   var candidates = [];
   for (var i = segs.length; i >= 0; i--) {
@@ -146,9 +149,8 @@ body{
   function probe(index) {
     if (index >= candidates.length) return;
     var base = candidates[index];
-    if (base === location.pathname) return probe(index + 1);
     try {
-      fetch(base + 'index.html', { method: 'HEAD' })
+      fetch(base + MARKER, { method: 'HEAD' })
         .then(function (res) { res.ok ? apply(base) : probe(index + 1); })
         .catch(function () { probe(index + 1); });
     } catch (e) { /* 老浏览器或 file:// 下直接放弃，保留相对链接 */ }
