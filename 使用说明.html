@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>使用说明 · 芯片引脚参考</title>
+<meta name="description" content="芯片引脚参考站的使用说明：怎么查引脚、怎么搜索筛选、怎么新增芯片与系列、数据字段含义。">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="brand-mark" aria-hidden="true">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="6" y="6" width="12" height="12" rx="2"/>
+          <path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/>
+        </svg>
+      </span>
+      <span class="brand-txt">芯片引脚参考</span>
+    </a>
+
+    <div class="crumb">
+      <span class="sep">/</span>
+      <a href="index.html">芯片系列</a>
+      <span class="sep">/</span>
+      <strong>使用说明</strong>
+    </div>
+
+    <nav class="topnav" aria-label="主导航">
+      <a href="#usage">怎么用</a>
+      <a href="#add-chip">加芯片</a>
+      <a href="#fields">字段说明</a>
+    </nav>
+
+    <button class="icon-btn" id="themeBtn" type="button" aria-label="切换主题"></button>
+  </div>
+</header>
+
+<main>
+  <section class="wrap doc-hero">
+    <h1>使用说明</h1>
+    <p class="doc-lede">
+      这个站点把常见 MCU 的引脚分布与功能复用关系做成可视化速查表。下面是查资料的方法、扩展芯片的步骤，以及数据字段的含义。
+    </p>
+  </section>
+
+  <div class="wrap doc-layout">
+    <aside class="doc-toc">
+      <span class="doc-toc-title">目录</span>
+      <a href="#start">快速开始</a>
+      <a href="#usage">怎么用</a>
+      <a href="#add-chip">新增一颗芯片</a>
+      <a href="#add-series">新增一个系列</a>
+      <a href="#fields">数据字段说明</a>
+      <a href="#design">设计约定</a>
+      <a href="#credibility">数据可信度</a>
+      <a href="#faq">常见问题</a>
+    </aside>
+
+    <div class="doc-body">
+
+      <section id="start">
+        <h2>快速开始</h2>
+        <p>
+          全部页面都是纯静态文件，<strong>不需要安装任何东西，也不需要联网</strong>。
+        </p>
+
+        <h3>直接打开（最简单）</h3>
+        <p>双击根目录的 <code>index.html</code> 即可。</p>
+        <div class="callout">
+          用 <code>file://</code> 方式打开时功能完全正常。唯一差别是浏览器出于安全策略不允许脚本读取本地 CSS 的规则列表，这不影响任何显示效果。
+        </div>
+
+        <h3>本地起服务（改代码时更方便）</h3>
+        <p>如果要改样式或加芯片，起一个本地服务，改完刷新就能看到：</p>
+<pre><code># 任选一种，在项目根目录执行
+python -m http.server 8000
+# 或
+npx serve .</code></pre>
+        <p>然后浏览器打开 <code>http://127.0.0.1:8000/</code>。</p>
+      </section>
+
+      <section id="usage">
+        <h2>怎么用</h2>
+        <p>页面按「首页 → 系列页 → 芯片详情页」三层组织。</p>
+
+        <h3>首页与系列页</h3>
+        <p>
+          首页按<strong>芯片系列</strong>组织，目前两个系列：STM32（青绿）、ESP32（咖啡黄）。点卡片进入系列页。系列页列出该系列已收录的芯片，顶部搜索框可按型号、封装、关键词过滤（例如输入 <code>F103</code>、<code>LQFP64</code>、<code>蓝桥杯</code>、<code>S3</code>、<code>QFN32</code>）。
+        </p>
+
+        <h3>芯片详情页的四个板块</h3>
+        <p>对应实际查资料时的四种场景：</p>
+        <table class="doc-table">
+          <thead>
+            <tr><th style="width:34%">板块</th><th>用途</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><b>1 · 封装引脚分布图</b></td><td>按真实封装四边排布（LQFP48/64/100、SMD-41 模组、QFN32），与实物引脚位置对应。点任一引脚，下方展开该脚的全部功能。</td></tr>
+            <tr><td><b>2 · 引脚功能总表</b></td><td>每行一个引脚。搜索框支持型号、外设名、引脚号模糊搜索；下方按钮可按串口 / SPI / I2C / CAN / 定时器 / 调试等类别筛选。</td></tr>
+            <tr><td><b>3 · 常用外设引脚速查</b></td><td>反查视角：想用某个外设，直接看它能挂在哪些引脚上。</td></tr>
+            <tr><td><b>4 · 硬件设计注意事项</b></td><td>容易踩坑的点，例如 5V 容限、专用脚限制、BOOT 配置、内置 Flash/PSRAM 占用。</td></tr>
+          </tbody>
+        </table>
+
+        <h3>几个实用技巧</h3>
+        <ul>
+          <li>引脚图上的<strong>颜色</strong>代表引脚类别：绿色 = 普通 GPIO，棕色 = 特殊功能脚，灰色 = 电源/地，紫色 = 调试口，灰褐 + 删除线 = 该型号上不可用（如被内置 PSRAM 占用）。图例在封装图下方，只显示当前芯片实际出现的类别。</li>
+          <li>表格里<strong>不同颜色的功能名</strong>代表不同外设类别（串口蓝、SPI 绿、定时器橙、I2C 紫等），扫一眼就能区分。</li>
+          <li>点引脚图上的引脚，会<strong>自动跳到总表对应行并高亮</strong>，两个板块是联动的。</li>
+          <li>芯片页开头的三张卡片分别跳<strong>嘉立创商城</strong>（中文，可查价查库存）、<strong>原厂英文数据手册 PDF</strong>、<strong>原厂产品页</strong>。</li>
+          <li>搜索框按 <code>Esc</code> 可快速清空。</li>
+          <li>右上角图标可切换<strong>深色模式</strong>，选择会记住。</li>
+          <li>手机或窄窗口下，封装图可左右滑动查看；表格也可横向滚动，表头会吸顶。</li>
+        </ul>
+      </section>
+
+      <section id="add-chip">
+        <h2>新增一颗芯片</h2>
+        <div class="callout">
+          关键设计：<strong>页面只有一个模板，芯片数据各自独立。</strong>
+          <code>chip.html</code> 不含任何具体芯片信息，它通过 URL 参数 <code>?id=f103c8t6</code> 去注册表取数据再渲染。所以新增芯片不需要复制页面。
+        </div>
+
+        <h3>目录结构</h3>
+<div class="tree">MCU pinout table/
+├── index.html              # 根入口：芯片系列列表
+├── assets/
+│   ├── style.css           # 全部样式（浅色/深色两套设计令牌）
+│   └── app.js              # 全部逻辑：数据注册、渲染、搜索筛选、主题
+├── stm32/
+│   ├── index.html          # STM32 系列页
+│   ├── chip.html           # 芯片详情页模板（通过 ?id= 取数据）
+│   ├── 校准报告.md          # 与官方手册的比对结果
+│   └── data/
+│       ├── f103c8t6.js     # STM32F103C8T6 · LQFP48
+│       ├── f407vet6.js     # STM32F407VET6 · LQFP100
+│       └── g431rbt6.js     # STM32G431RBT6 · LQFP64
+├── esp32/
+│   ├── index.html          # ESP32 系列页
+│   ├── chip.html           # 芯片详情页模板（同上）
+│   └── data/
+│       ├── esp32s3wroom1n16r8.js  # ESP32-S3-WROOM-1-N16R8 · SMD-41 模组
+│       └── esp32c3fh4.js          # ESP32-C3FH4 · QFN32 裸片
+├── 使用说明.html
+└── README.md</div>
+
+        <ol class="steps">
+          <li>
+            <b>新建数据文件</b>
+            <p>在 <code>stm32/data/</code> 下新建 <code>你的芯片id.js</code>，用 <code>MCU.register({...})</code> 包住一个对象。<code>MCU.register</code> 会把它登记进注册表。</p>
+<pre><code>MCU.register({
+  id: "stm32h743vit6",          // URL 参数用，建议全小写
+  name: "STM32H743VIT6",        // 页面大标题
+  family: "STM32H7",            // 系列名
+  pkg: "LQFP100",
+  pkgSize: "14 × 14 mm",
+  pitch: "0.5 mm",
+  pinCount: 100,
+
+  tags: ["高性能", "Cortex-M7"],
+  spec: [
+    ["内核", "Cortex-M7 @ 480 MHz"],
+    ["Flash", "2 MB"],
+    // ... 建议 8 条，页面上刚好排成 4 列两行
+  ],
+  intro: "一两句话说明这颗芯片的定位和典型用途。",
+
+  source: {
+    datasheet: "DS12110 Rev 8",
+    refman: "RM0433 Rev 7"
+  },
+
+  // 手册与购买链接（芯片页开头显示）
+  links: {
+    stProduct:   "https://www.st.com/en/microcontrollers-microprocessors/stm32h743vi.html",
+    stDatasheet: "https://www.st.com/resource/en/datasheet/stm32h743vi.pdf",
+    lcsc:        "https://item.szlcsc.com/xxxxxxx.html"
+  },
+
+  pins: [
+    {
+      n: 1,                     // 引脚号
+      nm: "PE2",                // 引脚名
+      ty: "I/O FT",             // 类型：I/O、I、O、电源 S 等，FT 表示 5V 容限
+      cat: "GPIO",              // 分类：GPIO / SPEC / PWR / DBG
+      ds: "PE2",                // 复位后的默认功能
+      af: {                     // 复用功能，按外设类别分组
+        "SPI4": ["SPI4_SCK"],
+        "TIM":  ["TIM3_ETR"],
+        "SYS":  ["TRACECLK"]
+      },
+      ad: "SAI1_SD_A",          // 附加功能（可选）
+      no: "上电时有短暂输出"     // 该脚的特殊注意事项（可选）
+    }
+    // ... 按引脚号顺序写全
+  ],
+
+  // 外设速查：想用某外设时，反查可用引脚
+  periph: [
+    {
+      title: "USART1",
+      rows: [
+        ["TX", ["PA9", "PB6"]],
+        ["RX", ["PA10", "PB7"]]
+      ]
+    }
+  ],
+
+  // 硬件设计注意事项，支持 &lt;b&gt; 加粗、&lt;u&gt; 强调、&lt;br&gt; 换行
+  notes: [
+    "VDDA 与 VREF+ 需&lt;b&gt;独立滤波&lt;/b&gt;，不要直接连数字 3.3V。",
+    "PC13–PC15 由电源开关供电，&lt;u&gt;不可作为电流源&lt;/u&gt;。"
+  ]
+});</code></pre>
+          </li>
+          <li>
+            <b>在系列页引入</b>
+            <p>编辑 <code>stm32/index.html</code>，在文件底部按同样格式加一行：</p>
+<pre><code>&lt;script src="data/stm32h743vit6.js"&gt;&lt;/script&gt;</code></pre>
+          </li>
+          <li>
+            <b>完成</b>
+            <p>刷新页面，系列页会自动多出一张卡片，详情页通过 <code>stm32/chip.html?id=stm32h743vit6</code> 访问。<strong>不需要改任何 JS 或 CSS。</strong></p>
+          </li>
+        </ol>
+      </section>
+
+      <section id="add-series">
+        <h2>新增一个系列（非 STM32）</h2>
+        <p><code>esp32/</code> 就是照这套步骤接进来的完整范例，可以直接照着改。</p>
+        <ol class="steps">
+          <li><b>新建文件夹</b><p>例如 <code>esp32/</code>。</p></li>
+          <li><b>复制页面模板</b><p>复制 <code>stm32/index.html</code> 和 <code>stm32/chip.html</code> 过去，<code>../assets/</code> 路径保持不变即可（都在同一层）。再把两个文件的 <code>&lt;html&gt;</code> 加上 <code>data-series="新系列名"</code>（ESP32 用的是 <code>data-series="esp"</code>）。</p></li>
+          <li><b>放数据</b><p>新建 <code>esp32/data/</code> 放该系列芯片数据，并在两个 HTML 底部按序引入。</p></li>
+          <li><b>挂到首页</b><p>在根 <code>index.html</code> 的 <code>#series</code> 区加一张卡片链过去。</p></li>
+          <li><b>加配色</b><p>在 <code>assets/style.css</code> 里为该系列加一段配色变量（见下面「配色系统」）。</p></li>
+        </ol>
+        <p>样式和逻辑完全复用，不用重复写。</p>
+      </section>
+
+      <section id="fields">
+        <h2>数据字段说明</h2>
+
+        <h3><code>cat</code> — 引脚分类（决定封装图配色）</h3>
+        <table class="doc-table">
+          <thead>
+            <tr><th style="width:18%">值</th><th style="width:44%">含义</th><th>颜色</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>GPIO</code></td><td>普通可编程 IO</td><td>绿</td></tr>
+            <tr><td><code>SPEC</code></td><td>特殊功能脚（OSC、BOOT、NRST、VBAT、EN 等）</td><td>棕</td></tr>
+            <tr><td><code>PWR</code></td><td>电源与地</td><td>灰</td></tr>
+            <tr><td><code>DBG</code></td><td>调试口（SWD / JTAG）</td><td>紫</td></tr>
+            <tr><td><code>NC</code></td><td>不可用 / 被内置 Flash、PSRAM 占用</td><td>灰褐 + 删除线</td></tr>
+          </tbody>
+        </table>
+
+        <h3><code>af</code> 的键名</h3>
+        <p>决定表格里功能名用什么颜色。已支持：<code>UART</code>、<code>SPI</code>、<code>I2C</code>、<code>CAN</code>、<code>USB</code>、<code>TIM</code>、<code>ADC</code>、<code>DAC</code>、<code>COMP</code>、<code>SAI</code>、<code>DBG</code>、<code>SYS</code>、<code>REMAP</code>、<code>DMA</code>、<code>FSMC</code>、<code>ETH</code>、<code>DCMI</code>、<code>SDIO</code>、<code>RTC</code>、<code>TOUCH</code>、<code>CLK</code>、<code>FLASH</code>、<code>STRAP</code>。</p>
+        <p>写其它名字也能正常显示，只是用默认颜色；筛选按钮会自动从数据里收集实际出现的类别，<strong>不需要手工维护</strong>。</p>
+
+        <h3><code>layout</code> 与 <code>epad</code> — 非四边均分封装</h3>
+        <p>STM32 的 LQFP 四边引脚数基本均分，程序会自动推算。但 ESP32-S3-WROOM-1 这种模组（左 14 / 底 13 / 右 13 / 顶 0）或 QFN32，必须显式给出真实布局：</p>
+<pre><code>layout: {
+  left:   [1, 2, 3, 4, 5, 6, 7, 8],         // 左侧自上而下
+  bottom: [9, 10, 11, 12, 13, 14, 15, 16],  // 底边自左向右
+  right:  [24, 23, 22, 21, 20, 19, 18, 17], // 右侧自下而上
+  top:    [32, 31, 30, 29, 28, 27, 26, 25]  // 顶边自右向左
+},
+epad: {n: 33, nm: "GND", desc: "底部散热焊盘 · 接地"},</code></pre>
+        <p><code>epad</code> 是底部散热焊盘，会单独画在芯片本体中央，点击同样能看详情。</p>
+
+        <h3><code>links</code> — 手册与购买入口</h3>
+        <p>芯片页开头三张卡片就来自这里。ST 芯片用 <code>stProduct</code> / <code>stDatasheet</code>；其它厂商用 <code>vendor</code> + <code>vendorProduct</code> + <code>vendorDatasheet</code>（<code>vendor</code> 同时决定页面显示「乐鑫 Espressif」还是「ST 官方」）：</p>
+<pre><code>links: {
+  vendor: "乐鑫 Espressif",
+  vendorProduct:   "https://www.espressif.com/en/products/socs/esp32-c3",
+  vendorDatasheet: "https://www.espressif.com/sites/default/files/documentation/esp32-c3_datasheet_en.pdf",
+  lcsc:            "https://item.szlcsc.com/3060870.html"
+}</code></pre>
+
+        <h3><code>ty</code> — 引脚类型</h3>
+        <p>按数据手册的 Type + I/O structure 两列合并书写，例如：</p>
+        <ul>
+          <li><code>I/O</code> — 普通双向</li>
+          <li><code>I/O FT</code> — 5V 容限</li>
+          <li><code>I/O TTa</code> — 3.3V 容限且带模拟功能</li>
+          <li><code>I</code> / <code>O</code> — 仅输入 / 仅输出</li>
+          <li><code>S</code> — 电源</li>
+        </ul>
+        <div class="callout warn">
+          这一列务必按手册填准，它是判断能不能直接接 5V 器件的关键依据。本站校准时就发现过 5V 容限被误标的引脚。
+        </div>
+      </section>
+
+      <section id="design">
+        <h2>设计约定</h2>
+        <ul>
+          <li><strong>配色</strong>：分两层。主页是白/米色中性底 + 墨灰强调色；每个系列用自己的强调色（STM32 青绿、ESP 咖啡黄）。正文对比度按 WCAG AA 校核，浅色与深色两套主题共 14 个页面组合全部达标。</li>
+          <li><strong>响应式</strong>：320px–1400px 无横向溢出、无文字截断；封装图与表格在窄屏内可横向滚动，不撑破页面。</li>
+          <li><strong>数据驱动</strong>：所有芯片内容都在 <code>data/*.js</code>，页面模板不含硬编码信息。</li>
+        </ul>
+
+        <h3>配色系统</h3>
+        <p>配色由两层变量叠加决定：<strong>表层</strong>（底色 / 文字 / 分隔线）和<strong>强调色</strong>（按钮、标签、色条）都按系列分组，再由主题决定明暗。</p>
+        <table class="doc-table">
+          <thead>
+            <tr><th style="width:26%">系列</th><th style="width:22%">底色</th><th style="width:22%">强调色</th><th>说明</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>主页（默认）</td><td><code>#f7f6f2</code> 白米</td><td><code>#5c6672</code> 墨灰</td><td>中性，不抢系列色</td></tr>
+            <tr><td><code>data-series="stm32"</code></td><td><code>#f0f2ed</code> 淡绿</td><td><code>#3f7266</code> 青绿</td><td>STM32 系列页与芯片页</td></tr>
+            <tr><td><code>data-series="esp"</code></td><td><code>#faf7ef</code> 米黄</td><td><code>#8a6a30</code> 咖啡黄</td><td>ESP32 系列页与芯片页</td></tr>
+          </tbody>
+        </table>
+        <p>切换系列配色只需在页面根元素上加一个属性：</p>
+<pre><code>&lt;!-- 主页：不写 data-series，用中性墨灰 --&gt;
+&lt;html lang="zh-CN"&gt;
+
+&lt;!-- STM32 系列页：青绿 --&gt;
+&lt;html lang="zh-CN" data-series="stm32"&gt;
+
+&lt;!-- ESP32 系列页：咖啡黄 --&gt;
+&lt;html lang="zh-CN" data-series="esp"&gt;</code></pre>
+        <p>单张卡片想局部套用某个系列色，加 <code>.palette-green</code> / <code>.palette-coffee</code> / <code>.palette-slate</code> 工具类即可 —— 主页的系列卡片就是这么给卡片顶端色条和「配色」胶囊上色的。</p>
+        <div class="callout">
+          新增一个系列配色：在 <code>assets/style.css</code> 里照抄一段，改三个选择器（<code>[data-series="新系列"]</code>、<code>[data-theme="dark"][data-series="新系列"]</code>、可选的 <code>.palette-新系列</code>），然后页面根元素加对应属性。
+        </div>
+      </section>
+
+      <section id="credibility">
+        <h2>数据可信度</h2>
+        <p>
+          STM32 三颗芯片的引脚定义、引脚类型、复用功能已与 ST 官方 PDF 数据手册逐条比对，共修正 19 处错误，详细记录见 <a href="stm32/校准报告.md">校准报告</a>。<br>ESP32 两款（ESP32-S3-WROOM-1-N16R8、ESP32-C3FH4）的引脚定义、类型、默认功能、复用功能、strapping 脚与内置 Flash / PSRAM 占用情况全部取自乐鑫官方手册，四边引脚布局按手册封装图逐一核对。
+        </p>
+        <div class="callout warn">
+          <span><strong>尚未覆盖</strong>：STM32 复用功能的 AF0–AF15 编号、电气参数（绝对最大额定值、灌拉电流）、勘误表（Errata）；ESP32 的 GPIO Matrix 任意映射关系、IO MUX 的 F0–F4 功能编号。做正式设计时请以手册原件为准。</span>
+        </div>
+      </section>
+
+      <section id="faq">
+        <h2>常见问题</h2>
+
+        <h3>为什么某颗芯片的某个外设引脚比手册少？</h3>
+        <p>已按当前封装剔除未引出的引脚。例如 STM32 LQFP100 封装没有 PF/PG 端口，相关复用功能不会列出，页面里的说明文字会标注「属 LQFP144+ 封装」。ESP32-S3-WROOM-1-N16R8 内置 8 MB 八线 PSRAM，IO35 / IO36 / IO37 被占用，页面上标为「不可用」并加删除线。</p>
+
+        <h3>搜索不到某个功能？</h3>
+        <p>搜索是基于表格文本的模糊匹配，可以试外设名（<code>usart1</code>）、引脚名（<code>PA9</code> / <code>IO4</code>）、引脚号（<code>42</code>）或功能片段（<code>rmii</code> / <code>adc2</code>）。也确认一下该功能在当前封装上是否真的引出。</p>
+
+        <h3>颜色看着不对 / 想换配色？</h3>
+        <p>所有颜色都是 <code>assets/style.css</code> 顶部的 CSS 变量（设计令牌）。表层色与强调色按系列分组（<code>[data-series="..."]</code>），深色在 <code>[data-theme="dark"]</code> 块里覆盖，改对应系列那一组即可。</p>
+
+        <h3>能加别的厂商芯片吗？</h3>
+        <p>可以。数据结构是通用的，按上面「新增一个系列」的步骤操作即可，<code>cat</code> / <code>af</code> 键名沿用现有约定就能直接复用配色。ESP32 就是照这个流程接进来的第二个系列。</p>
+      </section>
+
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="wrap foot-row">
+    <span>芯片引脚参考</span>
+    <span>
+      引脚数据以
+      <a href="https://www.st.com/en/microcontrollers-microprocessors/stm32-32-bit-arm-cortex-mcus.html" target="_blank" rel="noopener noreferrer">ST 官方手册</a>
+      与
+      <a href="https://www.espressif.com/en/support/documents/technical-documents" target="_blank" rel="noopener noreferrer">乐鑫官方手册</a>
+      为准，仅供设计参考
+    </span>
+  </div>
+</footer>
+
+<script src="assets/app.js"></script>
+</body>
+</html>

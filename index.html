@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>芯片引脚参考</title>
+<meta name="description" content="常见 MCU / 芯片的引脚分布图与功能总表，可搜索、可按外设筛选，浅色护眼界面。">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="brand-mark" aria-hidden="true">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="6" y="6" width="12" height="12" rx="2"/>
+          <path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/>
+        </svg>
+      </span>
+      <span class="brand-txt">芯片引脚参考</span>
+    </a>
+    <nav class="topnav" aria-label="主导航">
+      <a href="#series">芯片系列</a>
+      <a href="使用说明.html">使用说明</a>
+    </nav>
+
+    <button class="icon-btn" id="themeBtn" type="button" aria-label="切换主题"></button>
+  </div>
+</header>
+
+<main>
+  <section class="wrap hero">
+    <span class="eyebrow">CHIP PINOUT REFERENCE</span>
+    <h1>不同芯片的引脚<br><em>可视化速查</em></h1>
+    <p class="lede">
+      按系列组织，每颗芯片都提供封装引脚分布图、可搜索的引脚功能总表、外设速查与硬件设计要点。
+      浅色低对比配色，长时间查阅不累眼。
+    </p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#series">
+        进入芯片系列
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 5v13M5 12l7 7 7-7"/>
+        </svg>
+      </a>
+      <a class="btn" href="#about">数据来源与官方手册</a>
+    </div>
+  </section>
+
+  <section class="wrap" id="series">
+    <div class="chip-grid">
+      <a class="chip-card series palette-green" href="stm32/index.html">
+        <div class="series-body">
+          <div class="chip-card-head">
+            <div>
+              <h3>STM32 系列</h3>
+              <div class="fam">ST · 3 款芯片已收录</div>
+            </div>
+            <span class="pkg-badge">Cortex-M</span>
+          </div>
+          <p class="desc">
+            F103C8T6（LQFP48 入门）、F407VET6（LQFP100 高性能）、G431RBT6（LQFP64 电机与电源控制）。
+            含封装图、引脚总表、外设速查与设计要点。
+          </p>
+          <div class="specs">
+            <span>封装 <b>LQFP48 / 64 / 100</b></span>
+            <span>系列 <b>F1 · F4 · G4</b></span>
+            <span>配色 <b>青绿</b></span>
+          </div>
+          <span class="go">查看引脚参考 →</span>
+        </div>
+        <div class="series-art" aria-hidden="true">
+          <svg viewBox="0 0 240 200" fill="none">
+            <rect x="70" y="52" width="100" height="100" rx="9" fill="var(--accent-soft)" stroke="var(--accent-line)" stroke-width="1.4"/>
+            <circle cx="86" cy="68" r="3.2" fill="var(--accent)"/>
+            <text x="120" y="104" text-anchor="middle" font-family="ui-monospace,monospace" font-size="15" font-weight="700" fill="var(--accent-ink)">STM32</text>
+            <text x="120" y="124" text-anchor="middle" font-family="ui-monospace,monospace" font-size="10" fill="var(--muted)">LQFP</text>
+            <g stroke="var(--accent-line)" stroke-width="2.6" stroke-linecap="round">
+              <path d="M88 52v-14M104 52v-14M120 52v-14M136 52v-14M152 52v-14"/>
+              <path d="M88 152v14M104 152v14M120 152v14M136 152v14M152 152v14"/>
+              <path d="M70 70h-14M70 86h-14M70 102h-14M70 118h-14M70 134h-14"/>
+              <path d="M170 70h14M170 86h14M170 102h14M170 118h14M170 134h14"/>
+            </g>
+            <g fill="var(--c-spec)">
+              <circle cx="120" cy="34" r="2.6"/><circle cx="120" cy="170" r="2.6"/>
+            </g>
+            <g fill="var(--c-dbg)">
+              <circle cx="52" cy="102" r="2.6"/><circle cx="188" cy="102" r="2.6"/>
+            </g>
+          </svg>
+        </div>
+      </a>
+
+      <a class="chip-card series palette-coffee" href="esp32/index.html">
+        <div class="series-body">
+          <div class="chip-card-head">
+            <div>
+              <h3>ESP32 系列</h3>
+              <div class="fam">Espressif · 2 款已收录</div>
+            </div>
+            <span class="pkg-badge">Wi-Fi · BLE</span>
+          </div>
+          <p class="desc">
+            ESP32-S3-WROOM-1-N16R8（SMD-41 模组，16MB Flash + 8MB PSRAM）、ESP32-C3FH4（QFN32 裸片，RISC-V 单核 + 4MB 内置 Flash）。
+            内置 Flash / PSRAM 占用的引脚已在图与表里单独标出。
+          </p>
+          <div class="specs">
+            <span>封装 <b>SMD-41 / QFN32</b></span>
+            <span>内核 <b>LX7 双核 · RISC-V</b></span>
+            <span>配色 <b>咖啡黄</b></span>
+          </div>
+          <span class="go">查看引脚参考 →</span>
+        </div>
+        <div class="series-art" aria-hidden="true">
+          <svg viewBox="0 0 240 200" fill="none">
+            <rect x="62" y="44" width="116" height="112" rx="9" fill="var(--accent-soft)" stroke="var(--accent-line)" stroke-width="1.4"/>
+            <g stroke="var(--accent-line)" stroke-width="2.4" stroke-linecap="round">
+              <path d="M80 44v-12M100 44v-12M120 44v-12M140 44v-12M160 44v-12"/>
+              <path d="M80 156v12M100 156v12M120 156v12M140 156v12M160 156v12"/>
+              <path d="M62 62h-12M62 82h-12M62 102h-12M62 122h-12M62 142h-12"/>
+              <path d="M178 62h12M178 82h12M178 102h12M178 122h12M178 142h12"/>
+            </g>
+            <rect x="98" y="72" width="44" height="30" rx="3" fill="var(--accent-line)" opacity=".55"/>
+            <text x="120" y="126" text-anchor="middle" font-family="ui-monospace,monospace" font-size="13" font-weight="700" fill="var(--accent-ink)">ESP32</text>
+            <g stroke="var(--accent)" stroke-width="1.6" stroke-linecap="round" opacity=".8">
+              <path d="M120 62v-8M112 54a12 12 0 0 1 16 0"/>
+            </g>
+          </svg>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <section class="wrap" id="about">
+    <div class="note-grid">
+      <div class="note-card">
+        <h4>数据来源与官方手册</h4>
+        <p>引脚定义取自各原厂数据手册（Datasheet）的引脚表，复用功能与参考手册 / IO MUX 表核对，每颗芯片页脚标注版本号。STM32 部分已与 ST 手册逐条比对校准。</p>
+        <p class="note-links">
+          <a href="https://www.st.com/en/microcontrollers-microprocessors/stm32-32-bit-arm-cortex-mcus.html" target="_blank" rel="noopener noreferrer">ST 官网 STM32 产品线 ↗</a>
+          <a href="https://www.espressif.com/en/products/modules/esp32-s3" target="_blank" rel="noopener noreferrer">乐鑫 ESP32-S3 产品页 ↗</a>
+          <a href="https://www.espressif.com/en/products/socs/esp32-c3" target="_blank" rel="noopener noreferrer">乐鑫 ESP32-C3 产品页 ↗</a>
+        </p>
+      </div>
+      <div class="note-card">
+        <h4>按封装校验</h4>
+        <p>已剔除当前封装未引出的引脚（如 LQFP100 上的 PG/PF 端口、S3 模组的天线端），避免按图接线时误用不存在的焊盘。</p>
+      </div>
+      <div class="note-card">
+        <h4>扩展方式</h4>
+        <p>每个系列一个文件夹，系列内新增芯片只需增加一份数据文件，页面自动生成。</p>
+      </div>
+      <div class="note-card">
+        <h4>引脚类型速查</h4>
+        <p>总表里的类型列沿用手册写法，接线前先认准这几种：</p>
+        <ul class="type-key">
+          <li><code>I/O</code> 普通数字输入输出</li>
+          <li><code>I/O FT</code> 5V 容限，可直连 5V 逻辑</li>
+          <li><code>I/O TTa</code> 3.3V 容限 + 模拟功能</li>
+          <li><code>S</code> 电源脚（VDD / VSS / VDDA）</li>
+          <li><code>NRST</code> 复位脚，内部上拉</li>
+        </ul>
+        <p class="type-note">不带 FT 的引脚接 5V 会损坏芯片；ESP32 全系列都不耐 5V。</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap foot-row">
+    <span>芯片引脚参考</span>
+    <span>
+      引脚数据以
+      <a href="https://www.st.com/en/microcontrollers-microprocessors/stm32-32-bit-arm-cortex-mcus.html" target="_blank" rel="noopener noreferrer">官方数据手册</a>
+      为准，仅供设计参考
+    </span>
+  </div>
+</footer>
+
+<script src="assets/app.js"></script>
+</body>
+</html>
+

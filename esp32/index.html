@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-series="esp">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ESP32 系列 · 芯片引脚参考</title>
+<meta name="description" content="ESP32 系列模组与芯片的引脚分布图与功能总表，可搜索、可按外设筛选，浅色护眼界面。">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <a class="brand" href="../index.html">
+      <span class="brand-mark" aria-hidden="true">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="6" y="6" width="12" height="12" rx="2"/>
+          <path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/>
+        </svg>
+      </span>
+      <span class="brand-txt">芯片引脚参考</span>
+    </a>
+
+    <div class="crumb">
+      <span class="sep">/</span>
+      <a href="../index.html">芯片系列</a>
+      <span class="sep">/</span>
+      <strong>ESP32</strong>
+    </div>
+
+    <nav class="topnav" aria-label="主导航">
+      <a href="#chips">芯片列表</a>
+      <a href="../使用说明.html">使用说明</a>
+    </nav>
+
+    <button class="icon-btn" id="themeBtn" type="button" aria-label="切换主题"></button>
+  </div>
+</header>
+
+<main>
+  <section class="wrap hero">
+    <span class="eyebrow">ESP32 · PINOUT REFERENCE</span>
+    <h1>Wi-Fi / BLE 芯片<br><em>引脚一图看清</em></h1>
+    <p class="lede">
+      模组与裸片一起收录：模组看的是焊盘，裸片看的是引脚与内置 Flash 的占用关系。
+      每颗都提供封装引脚分布图、可搜索的引脚功能总表、外设速查与硬件设计要点。
+    </p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#chips">
+        浏览芯片
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 5v13M5 12l7 7 7-7"/>
+        </svg>
+      </a>
+      <a class="btn" href="#about">数据来源与官方手册</a>
+    </div>
+  </section>
+
+  <section class="wrap" id="chips">
+    <div class="index-toolbar">
+      <div class="search-field">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/>
+        </svg>
+        <input id="indexSearch" type="search" placeholder="搜索芯片型号、系列或关键词，如 S3 / C3 / QFN32 / RISC-V" autocomplete="off">
+      </div>
+      <span class="stat" id="indexStat"></span>
+    </div>
+
+    <div class="chip-grid" id="chipGrid"></div>
+  </section>
+
+  <section class="wrap" id="about">
+    <div class="note-grid">
+      <div class="note-card">
+        <h4>数据来源与官方手册</h4>
+        <p>引脚定义取自乐鑫官方数据手册（Datasheet）的 Pin Definitions / Pin Overview 表，复用功能按 IO MUX 表逐脚核对，模拟功能按 Analog Functions 表核对。每颗芯片页脚均标注具体版本号。</p>
+        <p class="note-links">
+          <a href="https://www.espressif.com/en/products/modules/esp32-s3" target="_blank" rel="noopener noreferrer">乐鑫 ESP32-S3 产品页 ↗</a>
+          <a href="https://www.espressif.com/en/products/socs/esp32-c3" target="_blank" rel="noopener noreferrer">乐鑫 ESP32-C3 产品页 ↗</a>
+          <a href="https://www.espressif.com/sites/default/files/documentation/esp32-s3-wroom-1_wroom-1u_datasheet_en.pdf" target="_blank" rel="noopener noreferrer">S3-WROOM-1 手册 ↗</a>
+          <a href="https://www.espressif.com/sites/default/files/documentation/esp32-c3_datasheet_en.pdf" target="_blank" rel="noopener noreferrer">C3 手册 ↗</a>
+        </p>
+      </div>
+      <div class="note-card">
+        <h4>模组与裸片不是一回事</h4>
+        <p>ESP32-S3-WROOM-1 是<b>模组</b>：41 个焊盘，含 3.3V、EN、天线与内置 Flash / PSRAM。ESP32-C3FH4 是<b>裸片</b>：QFN32，引脚就是芯片引脚，需要自己画晶振、匹配网络与电源。</p>
+      </div>
+      <div class="note-card">
+        <h4>怎么用</h4>
+        <p>点引脚图上的任一引脚可查看完整复用清单；总表支持引脚名 / 外设 / 引脚号模糊搜索，也可按串口、SPI、ADC、启动配置等快速筛选。</p>
+      </div>
+      <div class="note-card">
+        <h4>哪些引脚不能碰</h4>
+        <p>ESP32 与 STM32 最大的差别是：<b>内置 Flash / PSRAM 会占用引脚</b>。S3 的 IO26–IO37、C3 的 GPIO12–GPIO17 都不能外用；S3 的 IO35–IO37 在带 Octal PSRAM 的模组（如本页的 N16R8）上直接不可用，已在引脚图与总表里标为「不可用」。</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap foot-row">
+    <span>芯片引脚参考 · ESP32 系列</span>
+    <span>
+      引脚数据以
+      <a href="https://www.espressif.com/en/support/documents/technical-documents" target="_blank" rel="noopener noreferrer">乐鑫官方数据手册</a>
+      为准，仅供设计参考
+    </span>
+  </div>
+</footer>
+
+<script src="../assets/app.js"></script>
+<!-- 新增芯片：把 data/xxx.js 复制一行放进来即可 -->
+<script src="data/esp32s3wroom1n16r8.js"></script>
+<script src="data/esp32c3fh4.js"></script>
+</body>
+</html>

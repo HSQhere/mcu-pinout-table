@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-series="stm32">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>STM32 系列 · 芯片引脚参考</title>
+<meta name="description" content="STM32 系列芯片的引脚分布图与功能总表，可搜索、可按外设筛选，浅色护眼界面。">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <a class="brand" href="../index.html">
+      <span class="brand-mark" aria-hidden="true">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="6" y="6" width="12" height="12" rx="2"/>
+          <path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/>
+        </svg>
+      </span>
+      <span class="brand-txt">芯片引脚参考</span>
+    </a>
+
+    <div class="crumb">
+      <span class="sep">/</span>
+      <a href="../index.html">芯片系列</a>
+      <span class="sep">/</span>
+      <strong>STM32</strong>
+    </div>
+
+    <nav class="topnav" aria-label="主导航">
+      <a href="#chips">芯片列表</a>
+      <a href="../使用说明.html">使用说明</a>
+    </nav>
+
+    <button class="icon-btn" id="themeBtn" type="button" aria-label="切换主题"></button>
+  </div>
+</header>
+
+<main>
+  <section class="wrap hero">
+    <span class="eyebrow">STM32 · PINOUT REFERENCE</span>
+    <h1>把引脚复用关系<br><em>一眼看明白</em></h1>
+    <p class="lede">
+      每颗芯片都提供封装引脚分布图、可搜索的引脚功能总表、外设速查表与硬件设计要点。
+      浅色低对比配色，长时间查阅不累眼。
+    </p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#chips">
+        浏览芯片
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 5v13M5 12l7 7 7-7"/>
+        </svg>
+      </a>
+      <a class="btn" href="#about">数据来源与官方手册</a>
+    </div>
+  </section>
+
+  <section class="wrap" id="chips">
+    <div class="index-toolbar">
+      <div class="search-field">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/>
+        </svg>
+        <input id="indexSearch" type="search" placeholder="搜索芯片型号、系列或关键词，如 F103 / LQFP64 / 蓝桥杯" autocomplete="off">
+      </div>
+      <span class="stat" id="indexStat"></span>
+    </div>
+
+    <div class="chip-grid" id="chipGrid"></div>
+  </section>
+
+  <section class="wrap" id="about">
+    <div class="note-grid">
+      <div class="note-card">
+        <h4>数据来源与官方手册</h4>
+        <p>引脚定义取自 ST 官方数据手册（Datasheet）引脚表，复用功能与参考手册（Reference Manual）核对。每颗芯片页脚均标注具体版本号。站内数据已与官方手册逐条比对校准。</p>
+        <p class="note-links">
+          <a href="https://www.st.com/en/microcontrollers-microprocessors/stm32-32-bit-arm-cortex-mcus.html" target="_blank" rel="noopener noreferrer">ST 官网 STM32 产品线 ↗</a>
+          <a href="https://www.st.com/resource/en/datasheet/stm32f103c8.pdf" target="_blank" rel="noopener noreferrer">F103C8 手册 ↗</a>
+          <a href="https://www.st.com/resource/en/datasheet/stm32f407ve.pdf" target="_blank" rel="noopener noreferrer">F407VE 手册 ↗</a>
+          <a href="https://www.st.com/resource/en/datasheet/stm32g431rb.pdf" target="_blank" rel="noopener noreferrer">G431RB 手册 ↗</a>
+        </p>
+      </div>
+      <div class="note-card">
+        <h4>按封装校验</h4>
+        <p>已剔除当前封装未引出的引脚（如 LQFP100 上的 PG/PF 端口），避免按图接线时误用不存在的焊盘。</p>
+      </div>
+      <div class="note-card">
+        <h4>怎么用</h4>
+        <p>点引脚图上的任一引脚可查看完整复用清单；总表支持型号/外设/引脚号模糊搜索，也可按串口、SPI、定时器等快速筛选。</p>
+      </div>
+      <div class="note-card">
+        <h4>调试口默认被占用</h4>
+        <p>PA13 / PA14 复位后是 SWDIO / SWCLK，PA15 / PB3 / PB4 默认被 JTAG 占用。想当普通 GPIO 用：<b>F1</b> 需改 AFIO 重映射关掉 JTAG（保留 SWD，否则失去下载口）；<b>F4 / G4</b> 直接把引脚配成 GPIO 模式即可，无需重映射。这三颗芯片每颗都占 5 个调试脚。</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap foot-row">
+    <span>芯片引脚参考 · STM32 系列</span>
+    <span>
+      引脚数据以
+      <a href="https://www.st.com/en/microcontrollers-microprocessors/stm32-32-bit-arm-cortex-mcus.html" target="_blank" rel="noopener noreferrer">ST 官方数据手册</a>
+      为准，仅供设计参考
+    </span>
+  </div>
+</footer>
+
+<script src="../assets/app.js"></script>
+<!-- 新增芯片：把 data/xxx.js 复制一行放进来即可 -->
+<script src="data/f103c8t6.js"></script>
+<script src="data/f407vet6.js"></script>
+<script src="data/g431rbt6.js"></script>
+</body>
+</html>

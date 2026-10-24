@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-series="esp">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>芯片引脚图 · 芯片引脚参考</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <a class="brand" href="../index.html">
+      <span class="brand-mark" aria-hidden="true">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="6" y="6" width="12" height="12" rx="2"/>
+          <path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/>
+        </svg>
+      </span>
+      <span class="brand-txt">芯片引脚参考</span>
+    </a>
+
+    <div class="crumb">
+      <span class="sep">/</span>
+      <a href="../index.html">芯片系列</a>
+      <span class="sep">/</span>
+      <a href="index.html">ESP32</a>
+      <span class="sep">/</span>
+      <strong id="crumbName">…</strong>
+    </div>
+
+    <nav class="topnav" aria-label="页内导航">
+      <a href="#sec-pkg">引脚图</a>
+      <a href="#sec-table">功能总表</a>
+      <a href="#sec-periph">外设速查</a>
+      <a href="#sec-notes">设计要点</a>
+      <a href="../使用说明.html">使用说明</a>
+    </nav>
+
+    <button class="icon-btn" id="themeBtn" type="button" aria-label="切换主题"></button>
+  </div>
+</header>
+
+<main id="chipMain">
+  <div class="wrap chip-hero">
+    <h1 id="chipName">…</h1>
+    <div class="meta-line" id="chipMeta"></div>
+    <div class="tag-row" id="chipTags"></div>
+    <p class="intro" id="chipIntro"></p>
+
+    <!-- 手册入口：嘉立创中文页 + 乐鑫官方英文手册 -->
+    <div class="doc-links" id="docLinks"></div>
+
+    <dl class="spec-grid" id="specGrid"></dl>
+  </div>
+
+  <!-- ① 引脚分布图 -->
+  <section class="wrap section" id="sec-pkg">
+    <div class="section-head">
+      <span class="num">1</span>
+      <h2>封装引脚分布图</h2>
+      <span class="hint">俯视图 · 点击引脚查看详情</span>
+    </div>
+    <div class="pkg-scroll">
+      <div class="pkg" id="pkg"></div>
+    </div>
+    <p class="pkg-tip">封装图较宽，可左右滑动查看完整引脚</p>
+    <div class="legend" id="pkgLegend"></div>
+    <div class="pin-detail" id="pinDetail"></div>
+  </section>
+
+  <!-- ② 引脚功能总表 -->
+  <section class="wrap section" id="sec-table">
+    <div class="section-head">
+      <span class="num">2</span>
+      <h2 id="pinTableTitle">引脚功能总表</h2>
+      <span class="hint">支持引脚名 / 外设 / 引脚号搜索</span>
+    </div>
+
+    <div class="toolbar">
+      <div class="search-field">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/>
+        </svg>
+        <input id="search" type="search" placeholder="搜索 IO4 / U0TXD / ADC / SPI / 28 …" autocomplete="off">
+      </div>
+      <div class="filter-group" id="filters"></div>
+      <span class="stat" id="count"></span>
+    </div>
+
+    <div class="tbl-wrap">
+      <table class="pintable">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>引脚名</th>
+            <th>类型</th>
+            <th>复位后功能</th>
+            <th>复用功能</th>
+            <th>附加功能 / 注意</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+      <div class="tbl-empty" id="tblEmpty" style="display:none">没有匹配的引脚，试试其他关键词</div>
+    </div>
+  </section>
+
+  <!-- ③ 外设速查 -->
+  <section class="wrap section" id="sec-periph">
+    <div class="section-head">
+      <span class="num">3</span>
+      <h2>常用外设引脚速查</h2>
+      <span class="hint">已按封装过滤</span>
+    </div>
+    <div class="periph-grid" id="periph"></div>
+  </section>
+
+  <!-- ④ 设计要点 -->
+  <section class="wrap section" id="sec-notes">
+    <div class="section-head">
+      <span class="num">4</span>
+      <h2>硬件设计注意事项</h2>
+      <span class="hint">画板前先过一遍</span>
+    </div>
+    <ul class="tips" id="notes"></ul>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap foot-row">
+    <span id="chipSource"></span>
+    <span>芯片引脚参考 · 仅供设计参考，以官方手册为准</span>
+  </div>
+</footer>
+<script src="../assets/app.js"></script>
+<!-- 新增芯片：把 data/xxx.js 复制一行放进来即可 -->
+<script src="data/esp32s3wroom1n16r8.js"></script>
+<script src="data/esp32c3fh4.js"></script>
+</body>
+</html>
