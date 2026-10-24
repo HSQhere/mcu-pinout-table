@@ -128,13 +128,17 @@ npx serve .</code></pre>
         <h3>目录结构</h3>
 <div class="tree">MCU pinout table/
 ├── index.html              # 根入口：芯片系列列表
+├── guide.html              # 本页（站内使用说明）
+├── 404.html                # 错误页（自包含样式，路径自动探测）
+├── .nojekyll               # 让 GitHub Pages 跳过 Jekyll，原样发布
 ├── assets/
 │   ├── style.css           # 全部样式（浅色/深色两套设计令牌）
-│   └── app.js              # 全部逻辑：数据注册、渲染、搜索筛选、主题
+│   ├── app.js              # 全部逻辑：数据注册、渲染、搜索筛选、主题
+│   └── favicon.svg         # 站点图标
 ├── stm32/
 │   ├── index.html          # STM32 系列页
 │   ├── chip.html           # 芯片详情页模板（通过 ?id= 取数据）
-│   ├── 校准报告.md          # 与官方手册的比对结果
+│   ├── calibration-report.md  # 与官方手册的比对结果
 │   └── data/
 │       ├── f103c8t6.js     # STM32F103C8T6 · LQFP48
 │       ├── f407vet6.js     # STM32F407VET6 · LQFP100
@@ -145,7 +149,6 @@ npx serve .</code></pre>
 │   └── data/
 │       ├── esp32s3wroom1n16r8.js  # ESP32-S3-WROOM-1-N16R8 · SMD-41 模组
 │       └── esp32c3fh4.js          # ESP32-C3FH4 · QFN32 裸片
-├── 使用说明.html
 └── README.md</div>
 
         <ol class="steps">
@@ -335,7 +338,7 @@ epad: {n: 33, nm: "GND", desc: "底部散热焊盘 · 接地"},</code></pre>
       <section id="credibility">
         <h2>数据可信度</h2>
         <p>
-          STM32 三颗芯片的引脚定义、引脚类型、复用功能已与 ST 官方 PDF 数据手册逐条比对，共修正 19 处错误，详细记录见 <a href="stm32/校准报告.md">校准报告</a>。<br>ESP32 两款（ESP32-S3-WROOM-1-N16R8、ESP32-C3FH4）的引脚定义、类型、默认功能、复用功能、strapping 脚与内置 Flash / PSRAM 占用情况全部取自乐鑫官方手册，四边引脚布局按手册封装图逐一核对。
+          STM32 三颗芯片的引脚定义、引脚类型、复用功能已与 ST 官方 PDF 数据手册逐条比对，共修正 19 处错误，详细记录见 <a href="stm32/calibration-report.md">校准报告</a>。<br>ESP32 两款（ESP32-S3-WROOM-1-N16R8、ESP32-C3FH4）的引脚定义、类型、默认功能、复用功能、strapping 脚与内置 Flash / PSRAM 占用情况全部取自乐鑫官方手册，四边引脚布局按手册封装图逐一核对。
         </p>
         <div class="callout warn">
           <span><strong>尚未覆盖</strong>：STM32 复用功能的 AF0–AF15 编号、电气参数（绝对最大额定值、灌拉电流）、勘误表（Errata）；ESP32 的 GPIO Matrix 任意映射关系、IO MUX 的 F0–F4 功能编号。做正式设计时请以手册原件为准。</span>

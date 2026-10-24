@@ -170,7 +170,7 @@ git push -u origin main
 ### 注意事项
 
 - 仓库名如果就叫 `<用户名>.github.io`，站点地址是根域 `https://<用户名>.github.io/`，本项目也能直接访问。
-- 文件名带中文（`使用说明.html`）在 Pages 上可以正常访问，链接里的中文会被浏览器自动转义。
+- 站点内所有会出现在 URL 里的文件名（`index.html`、`chip.html`、`guide.html`、`404.html`、`calibration-report.md`）都是纯 ASCII，链接不需要 URL 转义，分享出去的地址也更好读。
 - `404.html` 是自包含页面（样式内联、带路径自动探测），即使被服务在任意深度的错误路径下也能正常显示。
 - 想自定义域名：同一页面填 **Custom domain**，再到域名商处加一条 CNAME 记录。
 - 想临时给别人看而懒得配 Pages：直接分享本地 `index.html` 所在的整个文件夹即可，`file://` 打开功能完全正常（唯一例外是 `404.html` 的根路径探测会被浏览器拦掉，它会保留相对链接，页面照常显示）。
@@ -182,7 +182,7 @@ git push -u origin main
 ```
 MCU pinout table/
 ├── index.html              # 根入口：芯片系列列表
-├── 使用说明.html            # 站内可读的使用文档
+├── guide.html              # 站内可读的使用文档
 ├── 404.html                # 错误页（自包含样式，路径自动探测）
 ├── .nojekyll               # 让 GitHub Pages 跳过 Jekyll，原样发布
 ├── assets/
@@ -192,7 +192,7 @@ MCU pinout table/
 ├── stm32/
 │   ├── index.html          # STM32 系列页
 │   ├── chip.html           # 芯片详情页模板（通过 ?id= 取数据）
-│   ├── 校准报告.md          # 与官方手册的比对结果
+│   ├── calibration-report.md  # 与官方手册的比对结果
 │   └── data/
 │       ├── f103c8t6.js     # STM32F103C8T6 · LQFP48
 │       ├── f407vet6.js     # STM32F407VET6 · LQFP100
@@ -429,7 +429,7 @@ links: {
 
 ## 数据可信度
 
-**STM32（3 颗）**：引脚定义、引脚类型、复用功能已与 ST 官方 PDF 数据手册逐条比对，共修正 19 处错误。详细比对记录见 [`stm32/校准报告.md`](stm32/校准报告.md)。
+**STM32（3 颗）**：引脚定义、引脚类型、复用功能已与 ST 官方 PDF 数据手册逐条比对，共修正 19 处错误。详细比对记录见 [`stm32/calibration-report.md`](stm32/calibration-report.md)。
 
 **ESP32（2 款）**：引脚定义、类型、默认功能、复用功能、strapping 脚、内置 Flash / PSRAM 占用情况全部取自乐鑫官方手册，引脚四边布局按手册封装图逐一核对（不是四等分推算）：
 
