@@ -124,19 +124,56 @@ npx serve .
 
 ## 部署到 GitHub Pages
 
-本仓库是纯静态站点，不需要构建步骤，Pages 开箱即用。
+**这个仓库的设计目标就是「上传即可用」：没有任何构建步骤、没有依赖、没有后端。**
+把文件推上 GitHub，在仓库设置里点三下，就能得到一个公开网址。
 
-1. 把代码推到 GitHub（见文末的上传步骤）。
-2. 打开仓库页面 → **Settings** → 左侧 **Pages**。
-3. **Source** 选 `Deploy from a branch`，**Branch** 选 `main`、目录选 `/ (root)`，点 **Save**。
-4. 等 1–2 分钟，页面顶部会出现站点地址：`https://<用户名>.github.io/<仓库名>/`。
-5. 之后每次 `git push`，站点会在 1 分钟左右自动更新。
+### 第一步：把代码上传到 GitHub
 
-**注意：**
+本地仓库已经建好并完成首次提交（分支 `main`），只差关联远程仓库。
+
+1. 打开 [github.com/new](https://github.com/new)，**Repository name** 填仓库名（例如 `mcu-pinout`）。
+2. **不要**勾选 *Add a README file*、*.gitignore*、*license*——本地已经有了，勾了会造成历史冲突。
+3. 点 **Create repository**。新仓库页面上会给出远程地址，复制 HTTPS 那条。
+4. 回到项目目录，执行：
+
+```bash
+git remote add origin https://github.com/<你的用户名>/<仓库名>.git
+git push -u origin main
+```
+
+之后每次改动只需 `git add -A && git commit -m "说明" && git push`。
+
+> 如果 `git push` 提示要密码：GitHub 早已不接受账号密码，请在
+> [Settings → Developer settings → Personal access tokens](https://github.com/settings/tokens)
+> 生成一个勾选 `repo` 权限的 token，把它当密码粘贴。或者改用 SSH 地址（`git@github.com:...`）。
+
+### 第二步：开启 Pages
+
+1. 打开仓库页面 → **Settings** → 左侧 **Pages**。
+2. **Source** 选 `Deploy from a branch`。
+3. **Branch** 选 `main`，目录选 `/ (root)`，点 **Save**。
+4. 等 1–2 分钟，刷新该页面，顶部会出现站点地址：`https://<用户名>.github.io/<仓库名>/`。
+
+**完成。** 之后每次 `git push`，GitHub 会自动重新发布，1 分钟左右生效。
+
+### 为什么能直接用，不用改任何配置
+
+| 常见坑 | 本项目的做法 |
+|---|---|
+| 绝对路径 `/assets/...` 在子路径站点下失效 | 全部使用相对路径（`assets/...`、`../assets/...`） |
+| 单页应用刷新 404 | 不用路由，芯片页靠 `chip.html?id=xxx` 查询参数，是真实的静态文件 |
+| Jekyll 处理下划线开头的文件 | 仓库根目录放了 `.nojekyll`，直接按原样发布，跳过 Jekyll |
+| 脚本用 `fetch` 读本地数据被 CORS 拦 | 数据以 `<script src>` 方式加载，不发起任何网络请求 |
+| 大小写不一致在 Linux 服务器上 404 | 所有引用与实际文件名大小写完全一致 |
+| 找不到图标 / 错误链接无提示 | 提供 `assets/favicon.svg` 与根目录 `404.html` |
+
+### 注意事项
 
 - 仓库名如果就叫 `<用户名>.github.io`，站点地址是根域 `https://<用户名>.github.io/`，本项目也能直接访问。
 - 文件名带中文（`使用说明.html`）在 Pages 上可以正常访问，链接里的中文会被浏览器自动转义。
+- `404.html` 是自包含页面（样式内联、带路径自动探测），即使被服务在任意深度的错误路径下也能正常显示。
 - 想自定义域名：同一页面填 **Custom domain**，再到域名商处加一条 CNAME 记录。
+- 想临时给别人看而懒得配 Pages：直接分享本地 `index.html` 所在的整个文件夹即可，`file://` 打开功能完全正常。
 
 ---
 
@@ -146,9 +183,12 @@ npx serve .
 MCU pinout table/
 ├── index.html              # 根入口：芯片系列列表
 ├── 使用说明.html            # 站内可读的使用文档
+├── 404.html                # 错误页（自包含样式，路径自动探测）
+├── .nojekyll               # 让 GitHub Pages 跳过 Jekyll，原样发布
 ├── assets/
 │   ├── style.css           # 全部样式（浅色/深色两套设计令牌）
-│   └── app.js              # 全部逻辑：数据注册、渲染、搜索筛选、主题
+│   ├── app.js              # 全部逻辑：数据注册、渲染、搜索筛选、主题
+│   └── favicon.svg         # 站点图标
 ├── stm32/
 │   ├── index.html          # STM32 系列页
 │   ├── chip.html           # 芯片详情页模板（通过 ?id= 取数据）
