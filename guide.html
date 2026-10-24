@@ -71,7 +71,7 @@
         <h3>直接打开（最简单）</h3>
         <p>双击根目录的 <code>index.html</code> 即可。</p>
         <div class="callout">
-          用 <code>file://</code> 方式打开时功能完全正常。唯一差别是浏览器出于安全策略不允许脚本读取本地 CSS 的规则列表，这不影响任何显示效果。
+          用 <code>file://</code> 方式打开时功能完全正常：芯片数据以 <code>&lt;script src&gt;</code> 方式加载，不经过 <code>fetch</code>，浏览器不会拦。唯一例外是 <code>404.html</code> 里那次根路径探测（用 <code>fetch</code> 判断自己被部署在哪个子目录），被拦后会自动降级成相对链接，页面照常显示。
         </div>
 
         <h3>本地起服务（改代码时更方便）</h3>
@@ -100,7 +100,7 @@ npx serve .</code></pre>
           </thead>
           <tbody>
             <tr><td><b>1 · 封装引脚分布图</b></td><td>按真实封装四边排布（LQFP48/64/100、SMD-41 模组、QFN32），与实物引脚位置对应。点任一引脚，下方展开该脚的全部功能。</td></tr>
-            <tr><td><b>2 · 引脚功能总表</b></td><td>每行一个引脚。搜索框支持型号、外设名、引脚号模糊搜索；下方按钮可按串口 / SPI / I2C / CAN / 定时器 / 调试等类别筛选。</td></tr>
+            <tr><td><b>2 · 引脚功能总表</b></td><td>每行一个引脚。搜索框支持外设名、引脚名、引脚号模糊搜索；下方按钮可按串口 / SPI / I2C / CAN / 定时器 / 调试等类别筛选，两者可叠加。</td></tr>
             <tr><td><b>3 · 常用外设引脚速查</b></td><td>反查视角：想用某个外设，直接看它能挂在哪些引脚上。</td></tr>
             <tr><td><b>4 · 硬件设计注意事项</b></td><td>容易踩坑的点，例如 5V 容限、专用脚限制、BOOT 配置、内置 Flash/PSRAM 占用。</td></tr>
           </tbody>
@@ -111,8 +111,9 @@ npx serve .</code></pre>
           <li>引脚图上的<strong>颜色</strong>代表引脚类别：绿色 = 普通 GPIO，棕色 = 特殊功能脚，灰色 = 电源/地，紫色 = 调试口，灰褐 + 删除线 = 该型号上不可用（如被内置 PSRAM 占用）。图例在封装图下方，只显示当前芯片实际出现的类别。</li>
           <li>表格里<strong>不同颜色的功能名</strong>代表不同外设类别（串口蓝、SPI 绿、定时器橙、I2C 紫等），扫一眼就能区分。</li>
           <li>点引脚图上的引脚，会<strong>自动跳到总表对应行并高亮</strong>，两个板块是联动的。</li>
+          <li>鼠标悬停在引脚上会<strong>浮出该脚的速览</strong>（复位后功能、复用功能、注意事项），不用先点下去。</li>
           <li>芯片页开头的三张卡片分别跳<strong>嘉立创商城</strong>（中文，可查价查库存）、<strong>原厂英文数据手册 PDF</strong>、<strong>原厂产品页</strong>。</li>
-          <li>搜索框按 <code>Esc</code> 可快速清空。</li>
+          <li>详情页的搜索框按 <code>Esc</code> 可快速清空（系列页的搜索框不支持 <code>Esc</code>，手动删即可）。</li>
           <li>右上角图标可切换<strong>深色模式</strong>，选择会记住。</li>
           <li>手机或窄窗口下，封装图可左右滑动查看；表格也可横向滚动，表头会吸顶。</li>
         </ul>
@@ -131,6 +132,8 @@ npx serve .</code></pre>
 ├── guide.html              # 本页（站内使用说明）
 ├── 404.html                # 错误页（自包含样式，路径自动探测）
 ├── .nojekyll               # 让 GitHub Pages 跳过 Jekyll，原样发布
+├── .gitattributes          # 统一 LF 换行，避免跨平台差异
+├── .gitignore              # 忽略系统/编辑器杂项
 ├── assets/
 │   ├── style.css           # 全部样式（浅色/深色两套设计令牌）
 │   ├── app.js              # 全部逻辑：数据注册、渲染、搜索筛选、主题
